@@ -17,14 +17,14 @@ export class FileUploadComponent implements OnInit {
  
   permissions:string | undefined ;
   hasAddPermission: boolean = false;
-  async chickpermissions(){
+  async checkpermissions(){
     const user = await Auth.currentAuthenticatedUser();
       this.permissions = user.signInUserSession.accessToken.payload['cognito:groups'];
     if(this.permissions=="FullPermissions" || this.permissions=="read&add")
     this.hasAddPermission = true;
   }
   ngOnInit() {
-    this.chickpermissions();
+    this.checkpermissions();
   }
 
 

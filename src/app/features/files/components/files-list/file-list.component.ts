@@ -20,7 +20,7 @@ export class FileListComponent implements OnInit {
   
   hasDeletePermission: boolean = false;
   permissions:string | undefined ;
-  async chickpermissions(){
+  async checkpermissions(){
     const user = await Auth.currentAuthenticatedUser();
       this.permissions = user.signInUserSession.accessToken.payload['cognito:groups'];
     if(this.permissions=="FullPermissions")
@@ -28,7 +28,7 @@ export class FileListComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getFiles();
-    this.chickpermissions();
+    this.checkpermissions();
   }
    getFiles(): void {
     this.isLoading = true;
