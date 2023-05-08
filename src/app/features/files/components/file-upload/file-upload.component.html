@@ -9,7 +9,7 @@
     <mat-card-content>
       <form (submit)="onSubmit()"  >
         <mat-label>Select file</mat-label>
-        <input type="file" (change)="onFileSelected($event)">
+        <input type="file" accept="text/csv" (change)="onFileSelected($event)">
         <button mat-raised-button color="primary" type="submit" >Upload</button>
       </form>
     </mat-card-content>
