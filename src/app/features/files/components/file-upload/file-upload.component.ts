@@ -32,9 +32,10 @@ export class FileUploadComponent implements OnInit {
     this.selectedFile = event.target.files[0];
   }
   onSubmit() {
-  if(this.permissions=="reader"){
-    console.log("You don't have a perimation!!");
-    return;
+  if (this.permissions == "reader") {
+    console.log("You don't have permission!!");
+    this.snackBar.open("You don't have permission!!", 'Close', { duration: 2000 });
+    throw new Error("User does not have permission");
   }
     const fileReader = new FileReader();
     fileReader.readAsText(this.selectedFile, 'UTF-8');

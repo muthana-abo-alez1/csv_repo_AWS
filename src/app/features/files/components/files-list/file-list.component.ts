@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FilesService, MyFile} from "../../files.service";
 import { Auth } from 'aws-amplify';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class FileListComponent implements OnInit {
   displayedColumns: string[] = ['name', 'size', 'actions'];
   isLoading:boolean = false;
 
-  constructor(private fileService: FilesService) {
+  constructor(private fileService: FilesService,private snackBar: MatSnackBar) {
     
   }
   
@@ -49,7 +50,7 @@ export class FileListComponent implements OnInit {
     });
   }
   
-
+ 
   downloadFile(file: MyFile): void {
     this.isLoading = true;
     this.fileService.downloadFile(file).subscribe({
@@ -58,27 +59,39 @@ export class FileListComponent implements OnInit {
           link.href = data.downloadUrl;
           link.download = file.name;
           link.click();
+          this.snackBar.open('File downloaded successfully', 'Close', { duration: 2000 });
         },
-        error: error => console.error(error),
+        error: error => {
+          console.error(error);
+          this.snackBar.open('Error downloading file', 'Close', { duration: 2000 });
+        },
         complete: () => this.isLoading = false
       });
   }
-
+  
   deleteFile(file: MyFile): void {
-    if(this.permissions!="FullPermissions"){
-      console.log("You don't have a perimation!!");
-      return;
+    if (this.permissions !== "FullPermissions") {
+      console.log("You don't have permission!!");
+      this.snackBar.open("You don't have permission!!", 'Close', { duration: 2000 });
+      throw new Error("User does not have permission");
     }
     this.isLoading = true;
     console.log(file.name);
     this.fileService.deleteFile(file.name).subscribe(
       {
-        next: () => this.getFiles(),
-        error: error => console.error(error),
+        next: () => {
+          this.getFiles();
+          this.snackBar.open('File deleted successfully', 'Close', { duration: 2000 });
+        },
+        error: error => {
+          console.error(error);
+          this.snackBar.open('Error deleting file', 'Close', { duration: 2000 });
+        },
         complete: () => this.isLoading = false
       }
     );
   }
+  
   convertToJson(file: MyFile): void {
     this.isLoading = true;
     this.fileService.convertToJson(file).subscribe({
@@ -93,8 +106,12 @@ export class FileListComponent implements OnInit {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(a.href);
+        this.snackBar.open('File converted to JSON successfully', 'Close', { duration: 2000 });
       },
-      error: error => console.error(error),
+      error: error => {
+        console.error(error);
+        this.snackBar.open('Error converting file to JSON', 'Close', { duration: 2000 });
+      },
       complete: () => this.isLoading = false
     });
   }
