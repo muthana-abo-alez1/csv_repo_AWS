@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Auth } from 'aws-amplify';
+import { FileListComponent } from '../files-list/file-list.component';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class FileUploadComponent implements OnInit {
   }
   ngOnInit() {
     this.checkpermissions();
+
   }
 
 
@@ -40,8 +42,7 @@ export class FileUploadComponent implements OnInit {
     const fileReader = new FileReader();
     fileReader.readAsText(this.selectedFile, 'UTF-8');
     fileReader.onload = () => {
-      const apiUrl = 'https://upkud6nbb6.execute-api.eu-west-2.amazonaws.com/upload_csv_mu?key=' + this.selectedFile.name;
-      console.log( this.selectedFile.name);
+      const apiUrl = 'https://wughuqbplc.execute-api.eu-west-2.amazonaws.com/upload_file_csv_mu?key=' + this.selectedFile.name;
       fetch(apiUrl, {
         method: 'POST',
         body: fileReader.result

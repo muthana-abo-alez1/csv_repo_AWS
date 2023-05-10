@@ -10,6 +10,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./file-list.component.scss']
 })
 export class FileListComponent implements OnInit {
+  static ngOnInit() {
+    throw new Error('Method not implemented.');
+  }
+  static getFiles() {
+    throw new Error('Method not implemented.');
+  }
   files: MyFile[] = [];
   @Output() uploadedFiles = new EventEmitter<MyFile[]>();
   displayedColumns: string[] = ['name', 'size', 'actions'];
@@ -28,8 +34,10 @@ export class FileListComponent implements OnInit {
     this.hasDeletePermission = true;
   }
   ngOnInit(): void {
-    this.getFiles();
     this.checkpermissions();
+    setTimeout(() => {
+      this.getFiles();
+    }, 1000);
   }
    getFiles(): void {
     this.isLoading = true;
@@ -70,13 +78,12 @@ export class FileListComponent implements OnInit {
   }
   
   deleteFile(file: MyFile): void {
-    if (this.permissions !== "FullPermissions") {
+    if (this.permissions != "FullPermissions") {
       console.log("You don't have permission!!");
       this.snackBar.open("You don't have permission!!", 'Close', { duration: 2000 });
       throw new Error("User does not have permission");
     }
     this.isLoading = true;
-    console.log(file.name);
     this.fileService.deleteFile(file.name).subscribe(
       {
         next: () => {
@@ -100,7 +107,7 @@ export class FileListComponent implements OnInit {
         const blob = new Blob([jsonStr], { type: 'application/json' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = file.name.split('.')[0] + '.txt';
+        a.download = file.name.split('.')[0] + '.json';
   
         document.body.appendChild(a);
         a.click();

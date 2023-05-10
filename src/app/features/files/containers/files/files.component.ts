@@ -15,12 +15,12 @@ export class FilesComponent {
 
   uploadFile(file: File): void {
     this.isLoading = true;
-    this._fileService.saveFile(file).subscribe(
-      {
-        next: () => this.files,
-        error: error => console.error(error),
-        complete: () => this.isLoading = false
-      }
-    );
+    // this._fileService.saveFile(file).subscribe(
+    //   {
+    //     next: () => this.files,
+    //     error: error => console.error(error),
+    //     complete: () => this.isLoading = false
+    //   }
+    // );
   }
 }

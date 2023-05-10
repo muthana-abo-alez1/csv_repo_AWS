@@ -7,6 +7,7 @@ import {FileRoutingModule} from "./files.routing";
 import {HttpClientModule} from "@angular/common/http";
 import {FilesService} from "./files.service";
 import {FilesComponent} from './containers/files/files.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,9 @@ import {FilesComponent} from './containers/files/files.component';
     CommonModule,
     MaterialModule,
     FileRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [FilesService],
 })
