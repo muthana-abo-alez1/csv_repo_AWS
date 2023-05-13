@@ -1,16 +1,4 @@
-# https://main.d213nui5ngj2r9.amplifyapp.com/files
-user name : admin<br>
-pass : 0599Admin!
-
-user name : reader<br>
-pass : 0599Reader!
-
-user name : Read&Add<br>
-pass : 0599Read_Add!
-
-![image](https://github.com/muthana-abo-alez1/csv_repo_AWS/assets/92632582/119bb43f-4c8e-4c11-89bc-e048e2b3b5af)
-
-
+## csv repo aws
 
 # upload file : 
 In the beginning, I created a function that sends a message to SNS containing the name of the file and the file, then SNS sends this message to two of the first function that uploads the file to s3 and the second function that uploads the file to DB  then I created an API and linked it with the function that  sending a message to SNS and does not forget also to add permissions for each function in the first function and also for encryption I used KMS to encrypt the data that is uploaded to s3 and the KMS decrypts by itself when doing any operation on s3 only we add the permissions to the function to decrypt the file
